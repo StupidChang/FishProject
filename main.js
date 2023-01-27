@@ -19,6 +19,21 @@ var Chart1 = new Chart(ctx, {
         }]
     },
     options: {
+        scales: {
+            x:{
+                grid:{
+                    display:false
+                },
+            },
+            y: {
+                grid:{
+                    display:false
+                },
+                max:12,
+                min:0
+            }
+        },
+        
         plugins: {
             legend:{
                 display: true,
@@ -42,12 +57,7 @@ var Chart1 = new Chart(ctx, {
                 
             }
         },
-        scales: {
-          y: {
-            max:16,
-            min:0
-          }
-        }
+        
       }
 
 
@@ -58,7 +68,7 @@ var Chart1 = new Chart(ctx, {
 function rand_number(){
     
     var num = (Math.random()*(2-10)+10).toFixed(2)
-    console.log(num)
+    
     var date = new Date()
     var time = date.getHours() + ":" + date.getMinutes() + ":" +date.getSeconds()
 

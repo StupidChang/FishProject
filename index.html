@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.2/dist/chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
@@ -35,20 +36,25 @@
             <a class = "nav-link" href="#">null</a>
         </li>
     </ul>
-    <div class = "jumbotron text-center">
+    <div class = "container-fluid p-5 bg-primary text-white text-center">
         <h1>Fishpond information</h1>
         <p>pH_value is import to water </p>
     </div>
+    <br>
     <div class = "container-fluid">
         <div class="row">
-            <div class = "col-xm-8 col-sm-4 col-md-4"></div>
-            <div class="col-xm-8 col-sm-4 col-md-4">
+            <!-- <div class="col-12 col-xm-8 col-sm-4 col-md-4 p-3">
                 <canvas id = "myChart"></canvas>
+            </div> -->
+            <div class="col-lg-3">
+                <h3>column 1</h3>
+                <p></p>
             </div>
-            
-            <div class="col-xm-8 col-sm-4 col-md-4">
-                <h3>Column 1</h3>
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Beatae culpa hic earum. Consequuntur atque rem inventore, officia nemo voluptatibus deleniti nobis nostrum reiciendis quos fuga eius nam rerum magni eos.</p>
+            <div class="col-lg-6">
+                <div>
+                    <canvas id = "myChart"></canvas>
+                </div>    
+                           
             </div>
         </div>
         
