@@ -1,8 +1,18 @@
+// Vue.js
+var vm = new Vue({
+    el : "#app",
+    data : {
+        value:{
+            pH: "null",
+            average : "null"
+        }
+    },
+   
+})
 
-
+// Line chart setting 
 var x = [null]
 var y = [null]
-
 
 var ctx = document.getElementById('myChart').getContext("2d")
 var Chart1 = new Chart(ctx, {
@@ -63,13 +73,10 @@ var Chart1 = new Chart(ctx, {
 
 })
 
-var bar_x = []
-var bar_y = []
-for(var i = 0 ; i < 5 ; i++){
-    var num = (Math.floor(Math.random()*50)+10)
-    bar_y[i] = num
-    bar_x[i] = i
-}
+// Bar chart setting
+var bar_x = [1,2,3,4,5]
+var bar_y = [15,20,35,55,30]
+
 var btx = document.getElementById('bar-chart').getContext("2d")
 var bar_chart = new Chart(btx,{
     type:'bar',
@@ -77,7 +84,7 @@ var bar_chart = new Chart(btx,{
     data:{
         labels:bar_x,
         datasets:[{
-            backgroundColor : 'rgb(200,0,0,0.6)',
+            backgroundColor : 'rgba(20,173,255,1)',
             label:'temperature',
             data : bar_y 
         },
@@ -128,16 +135,11 @@ var bar_chart = new Chart(btx,{
     }
 })
 
-
+// Line chart value 
 function rand_number(){
-    
     var num = (Math.random()*(2-10)+10).toFixed(2)
-  
     var date = new Date()
     var time = date.getHours() + ":" + date.getMinutes() + ":" +date.getSeconds()
-
-   
-   
     if(x.length<=5){
         x.push(time)
         y.push(num)
@@ -147,39 +149,46 @@ function rand_number(){
         x.push(time)
         y.push(num)
     }
-    //vm.$set(this.value,'pH',num)
     Chart1.update()
     vm.$set(vm.value,'pH',num)
+
 }
 
-setInterval(rand_number,2000)
+//Average of Bar chart values 
+function average(){
+    var sumition = 0
+    var average_value = 0.0
+    for(var i = 0 ; i < bar_x.length ; i++){
+        sumition = sumition + bar_y[i]
+    }
+    average_value = (sumition/bar_x.length).toFixed(1)
+    vm.$set(vm.value,'average',average_value) //update bar_chart value at Vue.average.value
+}
 
+average() //call function
+setInterval(rand_number,2000) // call function every 2 seconds
+
+//Bar chart random button function
 function random(){
     for(var i = 0 ; i < bar_y.length ; i++){
         var num = (Math.floor(Math.random()*50)+10)
         bar_y[i] = num
     }
     bar_chart.update()
+    average()
 }
-
+//Bar chart add button function
 function add(){
     var num = (Math.floor(Math.random()*50)+10)
     bar_x.push(bar_y.length)
     bar_y.push(num)
     bar_chart.update()
+    average()
 }
-
+//Bar chart delet button function
 function delet(){
     bar_x.pop()
     bar_y.pop()
     bar_chart.update()
+    average()
 }
-/************************************************************************/
-
-var vm = new Vue({
-    el : "#app",
-    data : {
-        value:{}
-    },
-   
-})

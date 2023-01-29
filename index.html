@@ -15,16 +15,8 @@
     
     <title>something</title>
 </head>
-
-<!-- 
-    xm(手機 寬度<768px)
-    sm(平板 寬度>=768px)
-    md(電腦 寬度>=992px)
-    lg(手機 寬度>=1200px)
--->
-
 <body>
-    <ul class = "nav nav-tabs">
+    <!-- <ul class = "nav nav-tabs">
         <li class = "nav-item">
             <a class = "nav-link active" href="#">Active</a>
         </li>
@@ -37,7 +29,7 @@
         <li class = "nav-item">
             <a class = "nav-link" href="#">null</a>
         </li>
-    </ul>
+    </ul> -->
     <div class = "container-fluid p-5 bg-primary text-white text-center">
         <h1>Fishpond information</h1>
         <p>pH_value is import to water </p>
@@ -45,24 +37,29 @@
     <br>
     <div class = "container-fluid">
         <div class="row">
-            <!-- <div class="col-12 col-xm-8 col-sm-4 col-md-4 p-3">
-                <canvas id = "myChart"></canvas>
-            </div> -->
+            <!-- Line chart -->
             <div class="col-lg-4">
                 <div>
                     <canvas id = "myChart"></canvas>
                 </div>    
             </div>
+            
+            <!-- Bar chart -->
             <div class ="col-lg-4 text-center">
                 <div><canvas id = "bar-chart"></canvas></div>
                 <button type="button" class = "btn btn-success" onclick="random()">random</button>
                 <button type="button" class = "btn btn-primary" onclick="add()">add</button>
                 <button type="button" class = "btn btn-danger" onclick="delet()">delet</button>
             </div>
+
+            <!-- Information -->
             <div class="col-lg-3 text-center m-3">
                 <h3>value</h3>
+                <br>
                 <div id="app">
-                    <p>{{value.pH}}</p>
+                    <p>pH vlue : {{value.pH}}</p>
+                    <br>
+                    <p>Average vule : {{value.average}}</p>
                 </div>
             </div>
         </div>
