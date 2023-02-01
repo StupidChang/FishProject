@@ -38,7 +38,9 @@
     <div class = "container-fluid">
         <div class="row">
             <!-- Line chart -->
+            
             <div class="col-lg-4">
+                <h3 class = "text-center">即時數據</h3>
                 <div>
                     <canvas id = "myChart"></canvas>
                 </div>    
@@ -46,6 +48,7 @@
             
             <!-- Bar chart -->
             <div class ="col-lg-4 text-center">
+                <h3>統計數據</h3>
                 <div><canvas id = "bar-chart"></canvas></div>
                 <button type="button" class = "btn btn-success" onclick="random()">random</button>
                 <button type="button" class = "btn btn-primary" onclick="add()">add</button>
@@ -54,7 +57,7 @@
 
             <!-- Information -->
             <div class="col-lg-3 text-center m-3">
-                <h3>value</h3>
+                <h3>數據看板J</h3>
                 <br>
                 <div id="app">
                     <p>pH vlue : {{value.pH}}</p>
