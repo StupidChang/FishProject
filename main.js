@@ -4,12 +4,31 @@ var vm = new Vue({
     data : {
         value:{
             pH: "null",
-            average : "null"
+            average : "null",
+            start_time : "null",
+            end_time : "null"
         }
     },
    
 })
 
+//choice time
+function serch_range(){
+    var start = document.getElementById('start_time').value
+    var end = document.getElementById('end_time').value
+    
+    if(start === "" && end != ""){
+        alert("please choice start_time")
+    }else if(end === "" && start != ""){
+        alert("please choice end_time")
+    }else if(start === "" && end === "" || start > end){
+        alert("check your input")
+    }
+    
+    vm.$set(vm.value,'start_time',start)
+    vm.$set(vm.value,'end_time',end)
+
+}
 // Line chart setting 
 var x = [null]
 var y = [null]
@@ -192,3 +211,5 @@ function delet(){
     bar_chart.update()
     average()
 }
+
+
