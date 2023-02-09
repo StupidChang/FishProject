@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.2/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <!-- Vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    
+    <title>something</title>
+</head>
+<body>
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" href="index.html">Index</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="station.html">Station1</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Disabled</a>
+        </li>
+      </ul>
+    <br>
+    <div class = "container-fluid">
+        <div class="row">
+            
+            <div class="col-lg-8">
+              <div class = "col-lg-8">
+                <div class="input-group p-3 mb-3">
+                  <div class="input-group-prepend">
+                  <span class="input-group-text" id="">Start and end time</span>
+                  </div>
+                  <input type="date" class="form-control" id = "start_time">
+                  <input type="date" class="form-control" id = "end_time">
+                  <button type="submit" class = "btn btn-primary" onclick="serch_range()">Sumit</button>
+              </div>
+              </div>
+                    
+            </div>
+            
+            <div class ="col-lg-4 text-center shadow p-3 mb-3 rounded">
+                <!-- Line chart --> 
+                <h3 class = "text-center">即時數據</h3>
+                <div>
+                    <canvas id = "myChart"></canvas>
+                </div>
+                <!-- Bar chart -->
+                <h3>統計數據</h3>
+                <div><canvas id = "bar-chart"></canvas></div>
+                <button type="button" class = "btn btn-success" onclick="random()">random</button>
+                <button type="button" class = "btn btn-primary" onclick="add()">add</button>
+                <button type="button" class = "btn btn-danger" onclick="delet()">delet</button>
+                <h3>數據看板</h3>
+                <br>
+                <div id="app">
+                    <p>pH vlue : {{value.pH}}</p>
+                    <br>
+                    <p>Average vule : {{value.average}}</p>
+                    <p>start_time: {{value.start_time}}</p>
+                    <p>end_time: {{value.end_time}}</p>
+                </div>
+            </div>     
+    </div>
+</body>
+<script src="main.js"></script>
+</html>
