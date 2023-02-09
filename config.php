@@ -42,7 +42,7 @@
         while($row = $result->fetch_assoc()){
             //echo $row["Database"]."<br>";
             if($row["Database"] === "fishpond"){
-                echo "database serch<br>";
+                //echo "database serch<br>";
                 $key = true;
                 $conn->close();
                 break;
@@ -68,7 +68,7 @@
         if($result ->num_rows > 0){
             while($row = $result->fetch_assoc()){
                 if($row["Tables_in_fishpond"] == "ph"){
-                    echo "talbe serch";
+                    //echo "talbe serch";
                     $table_key = true;
                     $conn->close();
                     break;
