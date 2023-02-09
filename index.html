@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.2/dist/chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
@@ -16,67 +16,70 @@
     <title>something</title>
 </head>
 <body>
-
-    <ul class="nav nav-tabs">
-        <li class="nav-item">
-          <a class="nav-link active" href="#">Active</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Disabled</a>
-        </li>
-      </ul>
-    <br>
-    <div class = "container-fluid">
-        <div class="row">
-            <!-- Line chart -->
-            
-            <div class="col-lg-8 border border-4">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                    <span class="input-group-text" id="">Start and end time</span>
-                    </div>
-                    <input type="date" class="form-control" id = "start_time">
-                    <input type="date" class="form-control" id = "end_time">
-                    <button type="submit" class = "btn btn-primary" onclick="serch_range()">Sumit</button>
-                </div>    
+  <div class="navbar navbar-dark bg-dark justify-content-between">
+    <a class = "navbar-brand">Navbar</a>
+    <button class = "navbar-toggler">
+      <span class = "navbar-toggler-icon"></span>
+    </button>
+  </div>
+  <section class="jumbotron text-center">
+    <div class = "container">
+      <h1 class = "font-weight-light">Album example</h1>
+      <p class = "lead text-muted">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellat, cumque accusamus dolor dolorem quis quidem temporibus voluptas optio sapiente dolorum saepe laboriosam consectetur cupiditate est quasi molestias esse at! Fugiat.</p>
+    </div>
+  </section>
+  <div class = "container">
+    <div class = "row">
+      <div class = " col-lg-4">
+        <div class = "card mb-4">
+          <div class = "card-body">
+            <p class = "card-text">
+              This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
+            </p>
+            <div class = "d-flex justify-content-between align-items-center">
+              <div class = "btn-group">
+                <button class = "btn btn-sm btn-outline-secondary">View</button>
+                <button class = "btn btn-sm btn-outline-secondary">Edit</button>
+              </div>
             </div>
-            
-            <!-- Bar chart -->
-            <div class ="col-lg-4 text-center">
-                <h3 class = "text-center">即時數據</h3>
-                <div>
-                    <canvas id = "myChart"></canvas>
-                </div>
-                
-                <h3>統計數據</h3>
-                <div><canvas id = "bar-chart"></canvas></div>
-                <button type="button" class = "btn btn-success" onclick="random()">random</button>
-                <button type="button" class = "btn btn-primary" onclick="add()">add</button>
-                <button type="button" class = "btn btn-danger" onclick="delet()">delet</button>
-                <h3>數據看板</h3>
-                <br>
-                <div id="app">
-                    <p>pH vlue : {{value.pH}}</p>
-                    <br>
-                    <p>Average vule : {{value.average}}</p>
-                    <p>start_time: {{value.start_time}}</p>
-                    <p>end_time: {{value.end_time}}</p>
-                </div>
-            </div>
-
-            <!-- Information -->
-            
-        </div>
-        <br>
+          </div>
         </div>
         
+      </div>
+      <div class = " col-lg-4">
+        <div class = "card mb-4">
+          <div class = "card-body">
+            <p class = "card-text">
+              This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
+            </p>
+            <div class = "d-flex justify-content-between align-items-center">
+              <div class = "btn-group">
+                <button class = "btn btn-sm btn-outline-secondary">View</button>
+                <button class = "btn btn-sm btn-outline-secondary">Edit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      <div class = " col-lg-4">
+        <div class = "card mb-4">
+          <div class = "card-body">
+            <p class = "card-text">
+              This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
+            </p>
+            <div class = "d-flex justify-content-between align-items-center">
+              <div class = "btn-group">
+                <button class = "btn btn-sm btn-outline-secondary">View</button>
+                <button class = "btn btn-sm btn-outline-secondary">Edit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
     </div>
+  </div>
 </body>
 <script src="main.js"></script>
 </html>
