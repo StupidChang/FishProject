@@ -1,0 +1,35 @@
+.shape-ex5{
+    width: 150px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    line-height: 40px;
+    color: #000;
+    background-color: transparent;
+    border: 1px solid #000;
+    position: relative;
+    transition: all .3s linear;
+}
+.shape-ex5 > p{
+    position: relative;
+    z-index: 1;
+}
+.shape-ex5::before{
+    content: "";
+    width: 100%;
+    height: 0%;
+    display: block;
+    background-color: #000;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: all .3s ease;
+}
+.shape-ex5:hover{
+    color: #fff;
+}
+.shape-ex5:hover::before{
+    height: 100%;
+}
