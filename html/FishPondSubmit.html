@@ -50,17 +50,22 @@
 
     <div class = "container">
         <div class="row">
-          <div class="col-md-8">
-            <div class="mb-3">
-              <label for="exampleFormControlInput1" class="form-label">魚塭名稱</label>
-              <input type="email" class="form-control" id="exampleFormControlInput1" >
-            </div>
-            <div class="mb-3">
-              <label for="exampleFormControlTextarea1" class="form-label">感測器類型</label>
-              <input type="text" class="form-control" placeholder="例: pH、Temp、O2">
-            </div>
-            
-            <button type="button" class="btn btn-primary">註冊魚塭</button>
+          <form action='res.php' method='post'>
+            <input name='name' type='text'>
+            <input name='submit' type='submit'>
+         
+            <div class="col-md-8">
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">魚塭名稱</label>
+                <input type="email" class="form-control" id="exampleFormControlInput1" >
+              </div>
+              <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">感測器類型</label>
+                <input type="text" class="form-control" placeholder="例: pH、Temp、O2">
+              </div>
+              
+              <button type="button" class="btn btn-primary">註冊魚塭</button>
+          </form>
           </div>
         </div>
     </div>
