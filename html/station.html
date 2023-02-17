@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 	  <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src=".//popvers.js"></script>
+    <script src="../js/popvers.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
     <script>
       $(document).ready(function(){
@@ -48,7 +48,7 @@
       </ul>
     <br>
 
-    <div class="popover">
+    <!--<div class="popover">
       <div class="arrow"></div>
       <h3 class="popover-title"></h3>
       <div class="popover-content"></div>
@@ -60,46 +60,36 @@
           <i class="icon-remove"></i>
         </button>
       </div>
-    </div>
+    </div>-->
 
 
-    <div onclick="Myfn()" class="btn rounded-3 " style="background-image: url(./plus.PNG); width: 130px; height: 130px; padding: px;"></div>
+    <div onclick="Myfn()" class="btn rounded-3 " style="background-image: url(../Img/icon.PNG); width: 130px; height: 130px; padding: px;"></div>
 
-    <div class="container" style="padding: 100px 50px 10px;" >
-      <div type="button" class="btn btn-default" title="感測器列表"  data-html="true"
-          data-container="body" data-toggle="popover" data-placement="left" 
-          data-content="">
-          <img src="./icon.PNG" alt="" style="width: 30px; height: 30px; background-position: center">
-      </div>
-    </div>
+    
 
-    <div class="popover">
+    <!--<div class="popover">
       <div class="arrow"></div>
       <h3 class="popover-title"></h3>
       <div class="popover-content"></div>
       <div class="popover-footer">
         <a href="#" class="btn btn-info btn-sm">Close</a>
       </div>
-    </div>
+    </div>-->
 
-    <div class = "container-fluid">
+    <div class = "container">
         <div class="row">
-            
             <div class="col-lg-8">
-
-              <div class="toast" data-bs-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="toast-header">
-                  <img src="..." class="rounded me-2" alt="...">
-                  <strong class="me-auto">Bootstrap</strong>
-                  <small>11 mins ago</small>
-                  <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-                <div class="toast-body">
-                  Hello, world! This is a toast message.
+              <div style="background-image: url(../Img/fishpond.PNG); width: 100%;">
+                <div class="container" style="padding: 100px 50px 10px;" >
+                  <div type="button" class="btn btn-default" title="感測器列表"  data-html="true"
+                      data-container="body" data-toggle="popover" data-placement="left" 
+                      data-content="">
+                      <img src="../Img/icon.PNG" alt="" style="width: 30px; height: 30px; background-position: center">
+                  </div>
                 </div>
               </div>
             </div>
-            
+
             <div class ="col-lg-4 text-center shadow p-3 mb-3 rounded">
                 <!-- Line chart --> 
                 <h3 class = "text-center">即時數據</h3>
