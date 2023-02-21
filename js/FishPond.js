@@ -6,6 +6,15 @@ var CardHtml = "";
 $(function() {
     console.log("Hello");
     Get2SQL()
+    //var fishdiv = document.getAttribute("fishdiv");
+    document.body.onclick = function(event){    //冒泡处理
+        console.log(event.target.parents());
+        console.log(event.target.style.attribute);
+        if(event.target.style.attribute == "fishdiv"){
+            var id = event.target.id;
+            console.log(id);
+        }
+    }
 });
 
 function Get2SQL(){
@@ -40,8 +49,8 @@ function generate(CardData){
 }
 
 function CreateHTML(FishPondName, FishText){
-    CardHtml += '<div class="card mt-3 col-12 border-1 rounded-3 border border-secondary" onclick="ClickFish()" style="max-height: 200px;">' +
-            '<div class="row g-0">' +
+    CardHtml += '<div class="card mt-3 col-12 border-1 rounded-3 border border-secondary" style="max-height: 200px;" name="Dad">' +
+            '<div class="row g-0">' +   
                 '<div class="col-md-4" >' +
                     '<img src="../Img/fishpond.PNG" class="img-fluid rounded-start" style="height: 190px; width: 150px;"  alt="...">' +
                 '</div>' +
@@ -50,16 +59,34 @@ function CreateHTML(FishPondName, FishText){
                     '<h5 class="card-title">' + FishPondName + '</h5>' +
                     '<p class="card-text">' + FishText + '</p>' +
                     '<p class="card-text"><small class="text-muted">歡迎使用魚塭系統</small></p>' +
-                    '<div class="d-flex justify-content-end"><div class="shape-ex5 d-flex justify-content-center" id="' + 'FishNumber' + FishPondNumber + '"><p>前往漁塭</p></div></div>' +
+                    '<div class="d-flex justify-content-end">' +
+                        '<div class="shape-ex5 d-flex justify-content-center" name="fishdiv" id="' + FishPondName + '" onclick="MYfn(\'' + FishPondName + '\')"><p>前往漁塭</p></div></div>' +
                     '</div>' +
                 '</div>' +
             '</div>' +
         '</div>';
 }
 
-function ClickFish(Tab){
+function MYfn(Name){
+    try{
+        //StrName = JSON.stringify(Name); 
+        alert(typeof Name);
+        var url = "FishPond2.html?Name=" + Name;
+        alert(url);
+        var newWin = window.location.href = url;
+        if(newWin == null){
+            alert("彈出窗口被阻止");
+        }
+     } catch(e){
+        alert("彈出窗口被阻止");
+     }
+}
+
+
+
+/*function ClickFish(Tab){  onclick="ClickFish()"
     console.log("Tab")
-    console.log(Tab)
+    console.log(Tab)    
     let A = Tab.attr("class");
     if(A.indexOf("bg-primary") >= 0){
         Tab.classList.add("bg-primary");
@@ -67,7 +94,7 @@ function ClickFish(Tab){
     else{
         Tab.classList.remove("bg-primary");
     }
-}
+}*/
 
 $(document).on('click', '#FishSubmit', function(){//使用$(document).on()的原因是如果id為submit的按鈕是一開始沒有載入、透過ajax互動後才產生的DOM，那用$().click會抓不到，需以$(document).on()才行
     var FishSubmitName = $('#FishSubmitName').val();
@@ -106,4 +133,3 @@ $(document).on('click', '#FishSubmit', function(){//使用$(document).on()的原
         }
     })
  });
-

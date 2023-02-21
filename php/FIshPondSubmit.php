@@ -9,7 +9,9 @@
     $sql = "INSERT INTO fishpond (FishCode, FishPondName, CreateDate, FishText, X, Y) VALUES ('$FishPondNumber', '$FishSubmitName', '$today', '$FishSubmitText', '$FishSubmitX', '$FishSubmitY')";//插入表格語法
     //mysqli_query($link, $sql) or die("錯誤訊息：".mysqli_error($link));//執行插入
 
-    if ($conn->query($sql) === TRUE) {
+    $result = $conn->query($sql);
+
+    if ($result === TRUE) {
         echo "New record created successfully";
       } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
@@ -17,5 +19,6 @@
 
     echo $sql
     
-      
+    $result->free(); // 釋放記憶體
+    $conn->close();
 ?>

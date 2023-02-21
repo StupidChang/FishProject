@@ -14,21 +14,15 @@
     <!-- Vue.js -->
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 	  <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
     <script src="../js/popvers.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
-    <script>
-      $(document).ready(function(){
-        $.ajax({
-          url:'serch.json',
-          type:'GET',
-          dataType:'json',
-          success:function(response){
-            console.log(response)
-          }
-        })
-      })
-    </script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>-->
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+
+
+    
     <title>something</title>
 </head>
 <body>
@@ -65,33 +59,42 @@
 
     <div onclick="Myfn()" class="btn rounded-3 " style="background-image: url(../Img/icon.PNG); width: 130px; height: 130px; padding: px;"></div>
 
+    <div type="button" class="btn btn-default" title="感測器列表"  data-html="true" data-container="body" data-toggle="popover" data-placement="left" data-content="" >
+      <img src="../Img/icon.PNG" alt="" style="width: 30px; height: 30px; background-position: center">
+    </div>
+
     
 
-    <!--<div class="popover">
-      <div class="arrow"></div>
-      <h3 class="popover-title"></h3>
-      <div class="popover-content"></div>
-      <div class="popover-footer">
-        <a href="#" class="btn btn-info btn-sm">Close</a>
+    <div style="width: 86px; height: 86px;">
+      <div class="row">
+        <div class="col">
+          <div type="button" class="btn btn-default" title="感測器列表"  data-html="true" data-container="body" data-toggle="popover" data-placement="left" data-content="" style="position: absolute; top: 500px; left: 450px;" id="New">
+            <img src="../Img/icon.PNG" alt="" style="width: 40px; height: 40px; background-position: center">
+          </div>
+        </div>
+        <div class="col">
+          <div class="row">
+            <img src="../Img/yes.png" alt="">
+            <img src="../Img/no.png" alt="">
+          </div>
+        </div>
       </div>
-    </div>-->
+    </div>
+    
 
     <div class = "container">
         <div class="row">
             <div class="col-lg-8">
-              <div style="background-image: url(../Img/fishpond.PNG); width: 100%;">
-                <div class="container" style="padding: 100px 50px 10px;" >
-                  <div type="button" class="btn btn-default" title="感測器列表"  data-html="true"
-                      data-container="body" data-toggle="popover" data-placement="left" 
-                      data-content="">
-                      <img src="../Img/icon.PNG" alt="" style="width: 30px; height: 30px; background-position: center">
-                  </div>
-                </div>
+              <div type="button" class="btn btn-default" title="感測器列表"  data-html="true"
+              data-container="body" data-toggle="popover" data-placement="left" 
+              data-content="">
+                  <img src="../Img/icon.PNG" alt="" style="width: 30px; height: 30px; background-position: center">
               </div>
             </div>
 
             <div class ="col-lg-4 text-center shadow p-3 mb-3 rounded">
                 <!-- Line chart --> 
+                
                 <h3 class = "text-center">即時數據</h3>
                 <div>
                     <canvas id = "myChart"></canvas>
@@ -115,7 +118,4 @@
     </div>
 </body>
 
-<!-- Jquery -->
-
-<script src="main.js"></script>
 </html>
