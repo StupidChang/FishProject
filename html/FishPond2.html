@@ -5,89 +5,151 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-
-    <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js%22%3E"></script>-->
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.2/js/bootstrap.bundle.min.js%22%3E"></script>-->
-    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
-    <!--<link rel="stylesheet" href="../css/htmlfont.css">-->
     
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
-    <!--<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css%22%3E">
-    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js%22%3E"></script>-->
     <link rel="stylesheet" href="../css/htmlfont.css">
     <script src="../js/FishPond2.js"></script>
-    <!--<script src="../js/popvers.js"></script>-->
+    <link rel="stylesheet" href="../customScss/Setting.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <title>something</title>
 </head>
 <body>
-    <ul class="nav nav-tabs">
-        <li class="nav-item">
-            <a class="nav-link" href="index.html">Index</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link active" href="station.html">Station1</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Disabled</a>
-        </li>
-      </ul>
-    <br>
-
-    <div class="container-fluid col-12 border border-2 my-3" style="background-color: rgb(150, 217, 243);">
-      <p class="fw-bolder text-primary text-center" style="font-size: 35px; font-family: Microsoft JhengHei;">操作列表</p>
+  <nav class="navbar navbar navbar-expand-lg navbar-dark bg-dark ">
+    <div class="container-fluid">
+        <a class = "navbar-brand">Navbar</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="FrontPage.html">首頁</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="FishPond.html">魚塭列表</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="SensorManage.html">管理感測器</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+            </ul> 
+        </div>
     </div>
-
+</nav>
     <div class = "container">
         <div class="row">
-          
-          <div class="col-lg-8" style="height: 100vh">
-            
-            
+          <div class="col-lg-8 col-xl-8 col-md-12 col-sm-12" style="height: 100vh">
             <div class="col-lg-12 d-flex justify-content-center " style="position: relative;" id="Father">
               <!--<div class="col-lg-8" style="background-image: url(); height: 90vh; background-size: contain;">-->
                 <img src="../Img/fishpond.PNG" alt="" class="col-lg-8">
                 <div type="button" class="btn btn-default" title="感測器列表"  data-html="true"data-container="body" data-toggle="popover" data-bs-toggle="popover" data-placement="left" data-bs-content="And here's some amazing content. It's very engaging. Right?" data-content="測試感測器列表" style="position: absolute; top: 150px; left: 250px;">
                     <img src="../Img/icon.PNG" alt="" style="width: 30px; height: 30px; background-position: center">
                 </div>
-
             </div>
-
           </div>
 
-          <div class="col-lg-4">
-            <div class="row justify-content-center" style="background-color: rgba(224, 224, 224, 0.459);">
+          <div class="col-lg-4 col-xl-4 col-md-12 col-sm-12">
+            <div class="row d-flex justify-content-center" style="background-color: rgba(224, 224, 224, 0.459);">
               <div class="col-lg-11 border my-2 border-success rounded" style="background-color: rgb(255, 255, 255);">
-                <p class="text-center fs-5">魚塭基本資訊</p>
-                <p>魚塭名稱:</p>
+                <p class="text-center fs-5 mt-3">魚塭基本資訊</p>
+                <hr class="col-lg-12">
                 <p id="FishPondName"></p>
-                <p>建立日期:</p>
+                <p ></p>
                 <p id="FishPondCreateDate"></p>
-                <p>魚塭感測器數量:</p>
+                <p></p>
                 <p id="FishPondSensorNumber"></p>
-                <p>魚塭寬度:</p>
+                <p></p>
                 <p id="FishPondX"></p>
-                <p>魚塭長度:</p>
+                <p></p>
                 <p id="FishPondY"></p>
+                <p></p>
               </div>
 
               <div class="col-lg-11 border border-1 my-2 border-primary rounded">
                 <div class="row" style="background-color: rgb(255, 255, 255);">
-                  <div class="d-flex justify-content-center text-center fs-5">魚塭操作</div>
-                  <div class="d-flex justify-content-center my-3"><button type="button" class="btn btn-primary" id="CreateBtn">新增感測器群組</button></div>
-                  <div class="d-flex justify-content-center my-3"><button type="button" class="btn btn-primary" id="DeleteBtn">刪除感測器群組</button></div>
-                  <div class="d-flex justify-content-center my-3"><button type="button" class="btn btn-primary" id="DeleteFishPond">刪除魚塭</button></div>
+                  <div class="d-flex justify-content-center text-center fs-5 mt-3">魚塭操作</div>
+                  <div class="d-flex justify-content-center"><hr class="col-lg-12"></div>
+                  <div class="d-flex justify-content-center"><button type="button" class="btn btn-primary" id="CreateBtn">新增感測器群組</button></div>
+                  <div class="d-flex justify-content-center mt-3"><button type="button" class="btn btn-primary" id="DeleteBtn">刪除感測器群組</button></div>
+                  <div class="d-flex justify-content-center"><hr class="col-lg-11"></div>
+                  <div class="d-flex justify-content-center mb-2">
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#DeleteFish" class="btn btn-danger"  >刪除此魚塭</button>
+
+                    <div class="modal fade" id="DeleteFish" tabindex="-1">
+                      <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title">Modal title</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <p>Modal body text goes here.</p>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="DeleteFishPond">Save changes</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                  </div>
                 </div>
               </div>
 
               <div class="col-lg-11 border border-1 my-2 border-primary rounded">
-                <div class="row" style="background-color: rgb(255, 255, 255);">
-                  <div class="d-flex justify-content-center text-center fs-5">感測器群組列表</div>
-                  
+                <div class="row d-flex justify-content-center" style="background-color: rgb(255, 255, 255);" id="SensorList">
+                  <div class="d-flex justify-content-center text-center fs-5" style="color: goldenrod;">感測器未分類列表</div>
+
+                  <div class="col-lg-11 my-2 d-flex justify-content-center border border-2 rounded-pill border-info" style="background-color: rgb(200, 248, 248);">
+                    <div class="ms-2 me-auto" style="color: rgb(29, 41, 54);">
+                      <div class="fw-bold" style="color:rgb(0, 0, 0);">Temp</div>
+                      感測器代號: 14   |   感測器種類: pH  
+                    </div>
+                  </div>
+
+                  <div class="d-flex justify-content-center my-3">
+                    <button type="button" class="btn btn-pink" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">加入感測器至群組</button>
+
+                      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel" style="color: goldenrod;">加入感測器至群組</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <div class="modal-body">
+                              <label for="basic-url" class="form-label">將選擇的感測器加入群組。</label>
+                              <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">感測器編號</span>
+                                <select class="form-select" id="inputGroupSelectSensorCode">
+                                  <option value="1">One</option>
+                                  <option value="2">Two</option>
+                                  <option value="3">Three</option>
+                                </select>
+                              </div>
+                              <div class="mb-3 text-center">加入至</div>
+                              <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon2">群組編號</span>
+                                <select class="form-select" id="inputGroupSelectGroupCode">
+                                  <option value="1">One</option>
+                                  <option value="2">Two</option>
+                                  <option value="3">Three</option>
+                                </select>
+                              </div>
+                            </div>
+
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                              <button type="button" class="btn btn-primary" onclick="AddSensor2Group()">確認加入</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -95,12 +157,8 @@
         </div>
     </div>
 
-    <script>  
-      var popoverList1 = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))  
-      var popoverList2 = popoverList1.map(function (popoverTriggerfun) {  
-          return new bootstrap.Popover(popoverTriggerfun)  
-      })  
-    </script>   
+    <div id="AddModalData" style="z-index:-100;"></div>
     
+          
 </body>
 </html>

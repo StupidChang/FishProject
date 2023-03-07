@@ -20,38 +20,49 @@
     <title>something</title>
 </head>
 
-<body class="body">
-    <ul class="nav nav-tabs">
-        <li class="nav-item">
-            <a class="nav-link" href="index.html">Index</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link active" href="station.html">Station1</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Disabled</a>
-        </li>
-      </ul>
-    <br>
+<body class="body" style="background-color: rgb(255, 255, 255);">
+  <nav class="navbar navbar navbar-expand-lg navbar-dark bg-dark ">
+      <div class="container-fluid">
+          <a class = "navbar-brand">Navbar</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse">
+              <ul class="navbar-nav">
+                  <li class="nav-item">
+                      <a class="nav-link" href="FrontPage.html">首頁</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link active" href="FishPond.html">魚塭列表</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="SensorManage.html">管理感測器</a>
+                  </li>
+                  <li class="nav-item">
+                  <a class="nav-link disabled" href="#">Disabled</a>
+                  </li>
+              </ul> 
+          </div>
+      </div>
+  </nav>
 
-    <div class="container-fluid col-12 border border-2" style="background-color: rgb(150, 217, 243);">
-      <p class="fw-bolder text-primary text-center" style="font-size: 35px; font-family: Microsoft JhengHei;">魚塭列表</p>
+
+    <div class="container-fluid col-12 border border-1" style="background-color: rgb(150, 217, 243);">
+      
     </div>
 
     <div class = "container" >
         <div class="row">
-            <div class="col-lg-8 my-3" style="background-color: rgba(228, 228, 228, 0.623); height: 100vh;">
+            <div class="col-lg-8 my-3" style="background-color: rgba(228, 228, 228, 0.267); height: 100vh;">
+              <div class="col-lg-12 fw-bolder text-primary text-center" style="font-size: 35px; font-family: Microsoft JhengHei;">魚塭列表</div>  
               <div class="row" id="FishPondList">
                 
               </div>
             </div>
 
-            <div class="col-lg-4">
+            <div class="col-lg-4 ">
               <div class="row">
-                <div class="col-lg-12 m-3 border">
+                <div class="col-lg-12 m-3 border shadow-lg rounded bg-body" style="background-color: rgba(228, 228, 228, 0.1);">
                   <p class="text-center fs-3"> 魚塭資訊 </p>
                   <p>魚塭名稱:</p>
                   <p id="FishPondName"></p>
@@ -65,7 +76,7 @@
                   <p id="FishPondY"></p>
                 </div>
 
-                <div class="col-lg-12 m-3 border">
+                <div class="col-lg-12 m-3 border shadow-lg rounded bg-body" style="background-color: rgba(228, 228, 228, 0.1);">
                   <label for="FishName" class="form-label m-3">註冊魚塭資料</label>
                   <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1">魚塭名稱</span>

@@ -7,13 +7,12 @@ $(function() {
     console.log("Hello");
     Get2SQL()
     //var fishdiv = document.getAttribute("fishdiv");
+
     document.body.onclick = function(event){    //冒泡处理
-        console.log(event.target.parents());
-        console.log(event.target.style.attribute);
-        if(event.target.style.attribute == "fishdiv"){
-            var id = event.target.id;
-            console.log(id);
-        }
+        console.log(event.target.parents('[name="Dad"]'));
+        //console.log(event.target.style.attribute);
+        console.log(event.target.closest('td[name="Dad"]'));
+            
     }
 });
 
@@ -49,12 +48,12 @@ function generate(CardData){
 }
 
 function CreateHTML(FishPondName, FishText){
-    CardHtml += '<div class="card mt-3 col-12 border-1 rounded-3 border border-secondary" style="max-height: 200px;" name="Dad">' +
+    CardHtml += '<div class="card mt-3 col-12 border-1 rounded-3 border border-secondary" style="max-height: 200px;" name="Dad" data-FishName="' + FishPondName + '">' +
             '<div class="row g-0">' +   
-                '<div class="col-md-4" >' +
+                '<div class="col-md-2" >' +
                     '<img src="../Img/fishpond.PNG" class="img-fluid rounded-start" style="height: 190px; width: 150px;"  alt="...">' +
                 '</div>' +
-                '<div class="col-md-8">' +
+                '<div class="col-md-10 bg-gray">' +
                     '<div class="card-body">' +
                     '<h5 class="card-title">' + FishPondName + '</h5>' +
                     '<p class="card-text">' + FishText + '</p>' +
@@ -70,9 +69,9 @@ function CreateHTML(FishPondName, FishText){
 function MYfn(Name){
     try{
         //StrName = JSON.stringify(Name); 
-        alert(typeof Name);
+        //alert(typeof Name);
         var url = "FishPond2.html?Name=" + Name;
-        alert(url);
+        //alert(url);
         var newWin = window.location.href = url;
         if(newWin == null){
             alert("彈出窗口被阻止");

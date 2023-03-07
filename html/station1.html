@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <!-- Bootstrap-icons -->
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.2/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <!-- Vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- Mqtt -->
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+    <title>something</title>
+</head>
+<body>
+  <div class="navbar navbar-dark bg-dark justify-content-between">
+    <a class = "navbar-brand">Navbar</a>
+  </div>
+    <div class = "container pt-3">
+        <div class="row">
+          <div class="col-lg-8" >
+
+            <div class = "row" id = "serch">
+              <div class ="col-lg-5 input-group">
+                <span class = "input-group-text">Start time</span>
+                <input type="date" class="form-control" v-model = "serch.start_date">
+                <input type="time" class="form-control" v-model = "serch.start_time">
+              </div>
+              <div class="col-lg-5 input-group">
+                <span class = "input-group-text">End time</span>
+                <input type="date" class="form-control" v-model ="serch.end_date" value="">
+                <input type="time" class="form-control" v-model ="serch.end_time">
+              </div>
+              <input type="button" class = "btn btn-primary" v-on:click ="post_time()" value="Submit">
+            </div>
+
+            <div class = "col-lg-8 mx-auto pt-lg-5">
+              <div v-if = "x_length > 0">
+                <canvas id = "serch_chart"></canvas>
+              </div>
+            </div>
+            
+            <div class = "row m-3" id = "kanban">
+
+              <div class="col-lg-4">
+                  <h3>溫度</h3>
+                  <div class = "card">
+                      <div class = "card-body">
+                        <ul class="list-group list-group-flush">
+                          <li class="list-group-item" style="font-size: 25px;">最大值 : {{value.temperature_max}}</li>
+                          <li class="list-group-item" style="font-size: 25px;">最小值 : {{value.temperature_min}}</li>
+                          <li class="list-group-item" style="font-size: 25px;">平均值 : {{value.temperature_average}}</li>
+                        </ul>
+                      </div>    
+                  </div>
+              </div>
+
+              <div class="col-lg-4">
+                <h3>酸鹼</h3>
+                <div class = "card">
+                    <div class = "card-body">
+                      <ul class="list-group list-group-flush">
+                        <li class="list-group-item" style="font-size: 25px;">最大值 : {{value.ph_max}}</li>
+                        <li class="list-group-item" style="font-size: 25px;">最小值 : {{value.ph_min}}</li>
+                        <li class="list-group-item" style="font-size: 25px;">平均值 : {{value.ph_average}}</li>
+                      </ul>
+                    </div>    
+                </div>
+              </div>
+
+              <div class="col-lg-4">
+                <h3>氧化還原</h3>
+                <div class = "card">
+                    <div class = "card-body">
+                      <ul class="list-group list-group-flush">
+                        <li class="list-group-item" style="font-size: 25px;">最大值 : {{value.o2_max}}</li>
+                        <li class="list-group-item" style="font-size: 25px;">最小值 : {{value.o2_min}}</li>
+                        <li class="list-group-item" style="font-size: 25px;">平均值 : {{value.o2_average}}</li>
+                      </ul>
+                    </div>    
+                </div>
+              </div>
+
+            </div>
+            
+          </div>
+
+            <div class ="col-lg-4 text-center shadow p-3  mb-3 rounded">
+                <!-- Line chart --> 
+                <h3 class = "text-center">即時數據</h3>
+                <div>
+                    <canvas id = "myChart"></canvas>
+                </div>
+                <!-- Bar chart -->
+                <h3>統計數據</h3>
+                <div><canvas id = "bar-chart"></canvas></div>
+            </div>     
+    </div>
+</body>
+
+
+
+<script src="main.js"></script>
+<script>
+  
+
+</script>
+</html>
