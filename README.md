@@ -19,3 +19,6 @@ IOT應用，利用MQTT協定，在遠端以Arduino sensor進行資料傳輸至Br
 ![image3](https://github.com/StupidChang/FishProject/assets/54949870/485e00fc-09ea-4640-a63f-1b3dfb09d801)
 ![image4](https://github.com/StupidChang/FishProject/assets/54949870/88a37047-8051-4aa6-9d2c-b5e8e5f30a84)
 ![image5](https://github.com/StupidChang/FishProject/assets/54949870/85af362c-06bc-4153-89fe-5c29ab89eb62)
+
+**4.SQL共有5資料表**
+![image6](https://github.com/StupidChang/FishProject/assets/54949870/f3d96647-cb8e-4b39-96e2-640b218e6d9f)
