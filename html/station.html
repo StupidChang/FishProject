@@ -17,99 +17,266 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
     <!-- Vue.js -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <!-- Mqtt -->
+    <!-- Mqtt -->`
     <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
     <script src="../js/station.js"></script>
+    <link rel="stylesheet" href="../customScss/Setting.css">
     <title>something</title>
 </head>
 <body>
     <nav class="navbar navbar navbar-expand-lg navbar-dark bg-dark ">
         <div class="container-fluid">
-            <a class = "navbar-brand">Navbar</a>
+            <a class = "navbar-brand">[魚]</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="FrontPage.html">首頁</a>
+                        <a class="nav-link " href="FrontPage.html">首頁</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="FishPond.html">魚塭列表</a>
+                        <a class="nav-link " href="FishPond.html">魚塭列表</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="SensorManage.html">管理感測器</a>
-                    </li>
-                    <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Disabled</a>
+                        <a class="nav-link active" href="SensorManage.html">管理感測器</a>
                     </li>
                 </ul> 
             </div>
         </div>
     </nav>
+    <div class="col-12 bg-secondary ">  
+        <img src="../Img/google_back.png" alt="">
+        <button class="btn text-white" type="button" onclick="Myfn2()">返回上一頁</button>
+    </div>
 
-    <div class = "container-fluid pt-3">
+    <div class = "container-fluid pt-2">
         <div class="row">
-            <div class="col-lg-8 " >
-                <div class="row">
+            <div class="col-lg-9 " >
+                <div class="row d-flex justify-content-center">
                     <div class="col-lg-12">
                         <div class ="input-group date" id="datetimepicker2">
-                            <span class = "input-group-text">開始時間</span>
-                            <input id="start_date" type="date" class="form-control" v-model = "search.start_date">
-                            <input id="start_time" type="time" class="form-control" v-model = "search.start_time">
-                            <span class = "input-group-text">結束時間</span>    
-                            <input id="end_date" type="date" class="form-control" v-model ="search.end_date">
-                            <input id="end_time" type="time" class="form-control" v-model ="search.end_time">
-                            <button type="button" v-on:click ="post_time()" class="btn btn-secondary">進行查詢</button>
+                            <span class = "text-pink input-group-text">開始時間</span>
+                            <input id="start_date" type="date" class="form-control">
+                            <input value="00:00:00" id="start_time" type="time" class="form-control">
+                            <span class = "text-pink input-group-text">結束時間</span>    
+                            <input id="end_date" type="date" class="form-control">
+                            <input value="00:00:00" id="end_time" type="time" class="form-control">
+                            <span class="text-pink input-group-text">搜索間隔</span>
+                            <select class="form-select" id="searchType">
+                                <option selected>選擇間隔...</option>
+                                <option value="1">顯示每筆數據</option>
+                                <!--<option value="2">1小時</option>-->
+                                <!-- <option value="3">6小時</option>-->
+                                <option value="4">1天</option>
+                            </select>
+                            <button type="button" id="SearchBtn" class="btn btn-secondary">進行查詢</button>
                         </div>  
                     </div>
                     
                     <div class="d-flex justify-content-center">
-                        <div class="col-12 border border-2 border-info rounded my-2">
-                            <div class="row">
-                                <div class="col" v-model="">時間內最大值: </div>
-                                <div class="col">時間內最大值: </div>
-                                <div class="col">時間內最大值: </div>
+                        <div class="col-12 border border-2 border-info rounded my-2 shadow">
+
+                            <div class="row mt-1">
+                                <div  class="col d-flex justify-content-start">
+                                    <p class="text-primary">查詢內最大值:</p>
+                                    <p class="text-orange" id="SearchMax"></p>
+                                </div>
+                                <div  class="col d-flex justify-content-start">
+                                    <p class="text-primary">查詢內最小值:</p>
+                                    <p class="text-orange" id="Searchmin"></p>
+                                </div>
+                                <div  class="col d-flex justify-content-start">
+                                    <p class="text-primary">查詢內總平均:</p>
+                                    <p class="text-orange" id="Searchaverage"></p>
+                                </div>
+                                <div  class="col d-flex justify-content-start">
+                                    <p class="text-danger">錯誤總數:</p>
+                                    <p class="text-orange" id="SearchError"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <hr class="col-lg-12 m-3">
+
+                    <div class="col-xl-11">
+                        <div class="nav nav-tabs border-info" id="nav-tab" role="tablist">
+                            <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">折線圖</button>
+                            <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">長條圖</button>
+                            <button class="nav-link" id="nav-list-tab" data-bs-toggle="tab" data-bs-target="#nav-list" type="button" role="tab" aria-controls="nav-list" aria-selected="false">列表</button>
+                        </div>
+                        <div class="tab-content border border-top-0 rounded p-2 border-info" id="nav-tabContent">
+                            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+
+                                <canvas id="MainLineSearchChart" class="col-xl-10"></canvas>
+                            </div>
+
+                            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                <canvas id="MainBarSearchChart"></canvas>
+                            </div>
+
+                            <div class="tab-pane fade" id="nav-list" role="tabpanel" aria-labelledby="nav-list-tab" id="DataList">
+                                <div class="col-12" id="TheTables">
+
+                                    <table class="table table-striped table-light">
+                                        <thead>
+                                          <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">日期</th>
+                                            <th scope="col">數值</th>
+                                            <th scope="col">超過上限</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <tr>
+                                            <th scope="row">1</th>
+                                            <td>Mark</td>
+                                            <td>Otto</td>
+                                            <td>@mdo</td>
+                                          </tr>
+                                          <tr>
+                                            <th scope="row">2</th>
+                                            <td>Jacob</td>
+                                            <td>@fat</td>
+                                            <td class="bg-danger text-white">是</td>
+                                          </tr>
+                                          <tr>
+                                            <th scope="row">3</th>
+                                            <td colspan="2">Larry the Bird</td>
+                                            <td>@twitter</td>
+                                          </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <div class="col-12 d-flex justify-content-center ">
+                                        <nav aria-label="Page navigation example">
+                                            <ul class="pagination">
+                                              <li class="page-item">
+                                                <a class="page-link" href="#" aria-label="Previous">
+                                                  <span aria-hidden="true">&laquo;</span>
+                                                </a>
+                                              </li>
+                                              <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                              <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                              <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                              <li class="page-item">
+                                                <a class="page-link" href="#" aria-label="Next">
+                                                  <span aria-hidden="true">&raquo;</span>
+                                                </a>
+                                              </li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+
+                                </div>
+                                
                             </div>
                         </div>
                     </div>
 
-                    <div class = "col-lg-8 mx-auto pt-lg-5">
-                        <div v-if = "x_length > 0">
-                            <canvas id = "serch_chart"></canvas>
-                        </div>
-                    </div>
-
-                    
                 </div>
             </div>
 
-            <div class ="col-lg-4 text-center shadow p-3  mb-3 rounded">
+            <div class ="col-lg-3 text-center shadow p-3  mb-3 rounded">
                 <div class="row">
                     <div class="col-lg-12  border shadow-lg rounded bg-body" style="background-color: rgba(228, 228, 228, 0.1);">
-                        <p class="fs-3"> 24小時內資訊 </p>
-                        <h4 class="text-primary" id="type">溫度</h4>
-                        <p>最大值:</p>
-                        <p id="FishPondName"></p>
-                        <p>最小值:</p>
-                        <p id="FishPondCreateDate"></p>
-                        <p>平均值:</p>
-                        <p id="FishPondSensorNumber"></p>
-                    </div>
-                    <!-- Line chart --> 
-                    <div class="col-lg-12  border shadow-lg rounded bg-body mt-1" style="background-color: rgba(228, 228, 228, 0.1);">
-                        <p class="fs-3"> 即時數據 </p>
-                        <canvas id="myChart"></canvas>
-                    </div>
-                    
-                    <!-- Bar chart -->
-                    <div class="col-lg-12  border shadow-lg rounded bg-body mt-1" style="background-color: rgba(228, 228, 228, 0.1);">
-                        <p class="fs-3"> 統計數據 </p>
-                        <canvas id = "bar-chart"></canvas>
+                        <p class="fs-4 m-1 text-primary"> 感測器資料 </p>
+                        <hr class="m-1">
+                        <div class="row d-flex align-items-center">
+                            <p class="col-6 text-pink d-flex justify-content-start">感測器名稱:</p>
+                            <p id="Name" class="col-6 text-orange d-flex justify-content-center">嗨</p>
+                        </div>
+                        <div class="row d-flex align-items-center">
+                            <p class="col-6 text-pink d-flex justify-content-start">感測器類型:</p>
+                            <p id="Type" class="col-6 text-orange d-flex justify-content-center">溫度</p>
+                        </div>
+                        <div class="row d-flex align-items-center">
+                            <p class="col-6 text-pink d-flex justify-content-start">感測器編號:</p>
+                            <p id="Code" class="col-6 text-orange d-flex justify-content-center">12</p>
+                        </div>
+                        <div class="row d-flex align-items-center">
+                            <p class="col-6 text-pink d-flex justify-content-start">創立時間:</p>
+                            <p id="CreateDate" class="col-6 text-orange d-flex justify-content-center">2019/02/10 23:13:00</p>
+                        </div>
+                        <div class="row d-flex align-items-center">
+                            <p class="col-6 text-pink d-flex justify-content-start">資料庫總資料筆數</p>
+                            <p id="TotalData" class="col-6 text-orange d-flex justify-content-center">1039</p>
+                        </div>
+                        <div class="row d-flex align-items-center">
+                            <p class="col-6 text-pink d-flex justify-content-start">最後一筆資料接收時間:</p>
+                            <p id="Last" class="col-6 text-orange d-flex justify-content-center">2019/02/10 23:13:00</p>
+                        </div>
+                        <div class="row d-flex align-items-center">
+                            <p class="col text-pink d-flex justify-content-start">目前警告上限: </p>
+                            <p id="Max" class="col text-orange d-flex justify-content-center">123</p>
+                        </div>
+                        <div class="row d-flex align-items-center">
+                            <p class="col text-pink d-flex justify-content-start" >目前警告下限: </p>
+                            <p id="Min" class="col text-orange d-flex justify-content-center"></p>
+                        </div>
+                        <div class="row d-flex align-items-center">
+                            <p class="col text-pink d-flex justify-content-start">超過警告次數: </p>
+                            <p id="ErrorTime" class="col text-orange d-flex justify-content-center"></p>
+                            <button class="col btn btn-danger d-flex justify-content-center" type="button" onclick="ErrorSetZero()">清除錯誤</button>
+                        </div>
+                        
                     </div>
 
+                    <div class="col-lg-12 border shadow-lg rounded bg-body mt-2" style="background-color: rgba(228, 228, 228, 0.1);">
+                        <h3 class="fs-4 mt-1 text-primary"> 圖表搜尋資訊 </h3>
+                        <hr class="m-1">
+                        <div class="row d-flex align-items-center">
+                            <p class="col text-pink d-flex justify-content-start">開始搜索時間: </p>
+                            <p id="SearchStart" class="col text-orange d-flex justify-content-center">2021/1/13</p>
+                        </div>
+                        <div class="row d-flex align-items-center">
+                            <p class="col text-pink d-flex justify-content-start">結束搜索時間: </p>
+                            <p id="SearchFinal" class="col text-orange d-flex justify-content-center">2022/1/13</p>
+                        </div>
+                        <div class="row d-flex align-items-center">
+                            <p class="col text-pink d-flex justify-content-start">搜索間距: </p>
+                            <p id="Search" class="col text-orange d-flex justify-content-center">1小時</p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 border shadow-lg rounded bg-body mt-2" style="background-color: rgba(228, 228, 228, 0.1);">
+                        <h4 class="text-center text-purple mt-2">感測器設定</h4>
+                        <div class="input-group col-lg-8 col-xl-8">
+                            <div class="input-group-text">警告上限</div>
+                            <input id="SetMax"type="text" class="form-control" placeholder="請輸入上限" aria-label="Username" aria-describedby="basic-addon1">
+                        </div>
+                        <div class="input-group mt-3 col-lg-8 col-xl-8">
+                            <div class="input-group-text">警告下限</div>
+                            <input id="SetMin" type="text" class="form-control" placeholder="請輸入下限" aria-label="Username" aria-describedby="basic-addon1">
+                        </div>
+                        <div class="d-flex justify-content-center mt-3">
+                            <button class="btn btn-primary" type="button" id="SetError">設定</button>
+                        </div>
+                        <hr class="m-2">
+                        <div class="d-flex justify-content-center mb-3">
+                            <button class="btn btn-danger" data-bs-toggle="modal" type="button" data-bs-target="#DeleteSensor">刪除此感測器</button>
+
+                            <div class="modal fade" id="DeleteSensor" tabindex="-1">
+                                <div class="modal-dialog modal-dialog-centered">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title text-danger">警告: 您即將刪除此感測器</h5>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                      <p class="text-primary">刪除感測器將使數據資料完全消失，位置配對與設定也將一併刪除</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                                      <button type="button" class="btn btn-primary" onclick="DeleteSensor()">確認刪除</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                        </div>
+                    </div>
                 </div>
-                
             </div>   
 
         </div>

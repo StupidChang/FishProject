@@ -1,9 +1,12 @@
 <?php
     require_once("conn2SQL.php");
-    $X = $_GET['FinalPositionX'];
-    $Y = $_GET['FinalPositionY'];
-    $FishPondName = $_GET['FishPondName'];
+    $X = $_POST['FinalPositionX'];
+    $Y = $_POST['FinalPositionY'];
+    $FishPondName = $_POST['FishPondName'];
     //$FishPondName = "魚塭戰艦號";
+    $FishCode;
+    //$X = 50;
+    //$Y = 70;
     $myarray = array();
 
     $sql = "SELECT FishCode FROM fishpond Where FishPondName='$FishPondName'";
@@ -14,13 +17,15 @@
         }
     }
 
-    $sql = "INSERT INTO sensorposition (FishCode, X, Y) VALUES ('$FishCode', '$X', '$Y')"
+    //echo $FishCode;
+
+    $sql = "INSERT INTO sensorposition (FishCode, X, Y) VALUES ('$FishCode', '$X', '$Y')";
     $result = $conn->query($sql);   
     if($result === TRUE)
-        echo "插入成功"
+        echo "插入成功";
     else
-        echo "插入失敗"
+        echo "插入失敗";
 
-    $result->free();
+    //$result->free();
     $conn->close();
 ?>

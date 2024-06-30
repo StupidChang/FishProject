@@ -1,411 +1,423 @@
-var client = mqtt.connect("ws://broker.emqx.io:8083/mqtt") // add a {ws:// url} here example:{ws://broker.emqx.io:8083/mqtt}
-//connect to mqtt broker
-var sensorCode;
-var x = [null]
-var y = [null]
-var bar_x = []
-var bar_y = []
-var serch_x = []
-var serch_y = []
+let sensorCode;
+let firstPage = 0;
+let nowPage = 1;
+let finalPage = 10;
+let totalData;
+let responseData;
+let MaxError;
+let minError;
+let MaxData = 0;
+let minData = 14;
+let sumdata = 0.0;
+let MainLineX = [];
+let MainLineY = [];
+let errorArray = [];
+let errortime = 0;
+let MainBarX = ['一月', '二月', '三月'];
+let MainBarY = [60, 49, 72];
+let tableString = "";
+let back;
+let fishName;
 
 $(document).ready(function(){
-    var ctx = document.getElementById('myChart').getContext("2d")
-    var Chart1 = new Chart(ctx, {
-        type:'line',
-        plugins:[ChartDataLabels],
-        data:{
-            labels : x,
-            datasets:[{
-                label:'pH_vule',
-                data:y,
-                borderColor : "rgba(0,191,255,0.6)",//line
-                backgroundColor : "rgba(0,191,255,0.6)",//point border
-                tension:0.3
-            }]
-        },
-        options: {
-            scales: {
-                x:{
-                    grid:{
-                        display:false
-                    },
-                },
-                y: {
-                    grid:{
-                        display:false
-                    },
-                    max:12,
-                    min:0
-                }
-            },
-            
-            plugins: {
-                legend:{
-                    display: true,
-                    labels:{
-                        color : 'rgba(0,0,0,1)'
-                    }
-                },
-                datalabels:{
-                    display:'auto',
-                    color:'rgba(0,0,0,0.8)',
-                    //backgroundColor:'rgb(210,210,210,0.8)',
-                    labels:{
-                        title:{
-                            font:{
-                                weight:"bold"
-                            }
-                        }
-                    },
-                    anchor:'end',
-                    align:'end',
-                }
-            },
-        }
-    })
-
-    var btx = document.getElementById('bar-chart').getContext("2d")
-    var bar_chart = new Chart(btx,{
-        type:'bar',
-        plugins:[ChartDataLabels],
-        data:{
-            labels:bar_x,
-            datasets:[{
-                backgroundColor : 'rgba(20,173,255,1)',
-                label:'temperature',
-                data : bar_y 
-            },
-            
-        ]
-        },
-        options:{
-            plugins: {
-                legend:{
-                    display: true,
-                    labels:{
-                        color : 'rgb(0,0,0)'
-                    }
-                },
-                datalabels:{
-                    display:'auto',
-                    color:"rgb(255,255,255)", //font color
-                    //backgroundColor:'rgb(255,255,255,0.8)',
-                    labels:{
-                        title:{
-                            font:{
-                                weight:"bold"
-                            }
-                        }
-                    },
-                    anchor:'end',
-                    align:'start',
-                    
-                }
-            },
-            scales:{
-                x:{
-                    grid:{
-                        display:false
-                    }
-                },
-                y:{
-                    // grid : {
-                    //     display:false
-                    // },
-                    max:10,
-                    min:0
-
-                }
-            },
-        }
-    })
-
-    console.log("get it")
-    $.get('http://192.168.0.101/fish/month.php',function(data){
-        var msg = JSON.parse(data.toString())
-        console.log(msg[0])
-        var s, a , c
-        for(j = 1 ; j < 13 ; j++){
-            s = 0
-            a = 0
-            c = 0
-            bar_x.push(j)
-            for(i = 0 ; i < msg.length ; i++){
-                var day = msg[i].Time.split(" ")[0].split("-")[1]
-                
-                if(day == j){     
-                    s = s+parseFloat(msg[i].ph)
-                    c = c + 1 
-                }
-                
-            }
-            a = s/c
-            if(!isNaN(a.toFixed(2))){
-                bar_y[j-1] = a.toFixed(2)
-            }
-            bar_chart.update()
-            
-        }
-    })
-
-    var stx = document.getElementById('serch_chart').getContext("2d")
-    var serch_Chart = new Chart(stx, {
-        type:'line',
-        plugins:[ChartDataLabels],
-        data:{
-            labels : serch_x,
-            datasets:[{
-                label:'pH_vule',
-                data: serch_y,
-                borderColor : "rgba(0,191,255,0.3)",//line
-                backgroundColor : "rgba(0,191,255,0.3)",//point border
-                tension:0
-            }]
-        },
-        options: {
-            scales: {
-                x:{
-                    grid:{
-                        display:false
-                    },
-                },
-                y: {
-                    display:false,
-                    grid:{
-                        display:false
-                    },
-                    max:12,
-                    min:0
-                }
-            },
-            
-            plugins: {
-                legend:{
-                    display: true,
-                    labels:{
-                        color : 'rgba(0,0,0,1)'
-                    }
-                },
-                datalabels:{
-                    display:'auto',
-                    color:"rgba(0,0,0,1)",
-                    //backgroundColor:'rgb(210,210,210,0.8)',
-                    labels:{
-                        title:{
-                            font:{
-                                weight:"bold"
-                            }
-                        }
-                    },
-                    anchor:'end',
-                    align:'end',
-                    
-                }
-            },
-        }
-    })
-    
-    console.log("ctx=" + ctx)
-
     const quertString = window.location.search;
     const urlParams = new URLSearchParams(quertString);
     sensorCode = urlParams.get('sensorCode')
+    back = urlParams.get('back')
+    fishName = urlParams.get('Name')
     if(sensorCode != null){
-        Get2SQL(sensorCode);
+        console.log(sensorCode);
     }
     else{
         alert("無法獲取感測器!");
     }
 
-    client.on('connect', ()=>{
-        console.log('已成功連線!');
-        client.subscribe("fishpond")
-    });
-    client.on('message',function(topic,msg){
-        var str = msg.toString()
-        var temp = str.toLowerCase()
-        var data = JSON.parse(temp)
-        console.log(data)
-        
-        var date = new Date()
-        var time = date.getHours() + ":" + date.getMinutes() + ":" +date.getSeconds()
-        if(x.length<=5){
-            x.push(time)
-            y.push(data['ph'])
-        }else{
-            x.shift()
-            y.shift()
-            x.push(time)
-            y.push(data['ph'])
-        }    
-        Chart1.update()
+    TotalData()
+    SensorData();
+    updateLastView(sensorCode)
+
+    $('#SetError').on('click', function(){  
+        alert("123")
+        console.log($('#SetMax').val())
+        console.log($('#SetMin').val())
+        console.log(sensorCode)
+        $.ajax({
+            url: "../php/SetSensorError.php",
+            dataType: "json",
+            type: "POST",
+            data:{
+                Max:$('#SetMax').val(),
+                Min:$('#SetMin').val(),
+                sensorCode:sensorCode
+            },
+            success: function (response) {
+                console.log("修改成功");
+            },
+            error: function(response){
+                console.log("修改失敗");
+                console.log(response.text);
+            }
+        })
+    })
+
+    $('#SearchBtn').on('click', function(){
+        //document.removeChild(document.getElementById('MainLineSearchChart'))
+        //document.removeChild(document.getElementById('MainBarSearchChart'))
+        console.log($('#start_time').val());
+        console.log($('#start_date').val());
+        console.log($('#end_time').val());
+        console.log($('#end_date').val());
+        console.log(sensorCode);        
+        console.log($('#searchType').val());
+        if($('#start_time').val() == "" || $('#start_date').val() == "" || $('#end_time').val() == "" || $('#end_date').val() == "" || $('#searchType').val() == ""){
+            alert("請選擇開始日期或結束日期!")
+            return
+        }
+        $.ajax({
+            url: "../php/SearchData.php",
+            dataType: "json",
+            type: "POST",
+            data:{
+                start_time:$('#start_time').val(),
+                start_date:$('#start_date').val(),
+                end_time:$('#end_time').val(),
+                end_date:$('#end_date').val(),
+                sensorCode:sensorCode,
+                searchType:$('#searchType').val()
+            },
+            success: function (response) {
+                $('#SearchStart').html( $('#start_date').val() + " " + $('#start_time').val() );
+                $('#SearchFinal').html( $('#end_date').val() + " " + $('#end_time').val() );
+                $('#SearchStart').html(MaxData);
+                responseData = response;
+                totalData = Object.keys(response).length;
+                MainLineX = [];
+                MainLineY = [];
+                sumdata = 0;
+                for(let item in response){
+                    sumdata += parseFloat(response[item].value);
+                    MainLineX.push(response[item].Date);
+                    MainLineY.push(response[item].value);
+                    if(response[item].value > MaxError){
+                        errorArray.push((response[item].value - MaxError));
+                        errortime++
+                    }
+                    else if(response[item].value < minError){
+                        errorArray.push((response[item].value - minError));
+                        errortime++
+                    }
+                    else {
+                        errorArray.push(0);
+                    }
+
+                    if(MaxData < response[item].value){
+                        MaxData = response[item].value
+                    }else if(minData > response[item].value){
+                        minData = response[item].value
+                    }
+                }
+                console.log(MainLineX)
+                console.log(MainLineY)
+
+                var LineSearchChart = document.getElementById('MainLineSearchChart');
+                var LineChart = new Chart(LineSearchChart);
+                LineChart.destroy();
+                var LineChart = new Chart(LineSearchChart, {
+                    options: {
+                        scales: {
+                            Left:{
+                                position: "left",
+                                ticks: {
+                                    
+                                    
+                                  }
+                              },
+                            Right: {
+                                position: "right",
+                                ticks: {
+                                  stepSize: 6,
+                                  unitStepSize: 5
+                                },
+                                axisLabel: {
+                                  rotate: 90
+                                },
+                            },
+                            x: {
+                                color: 'blue'
+                            }
+                        }
+                    },
+                    type: 'line',
+                    display: true,
+                    data: {
+                        labels: MainLineX,
+                        scaleFontColor: "rgba(235, 168, 25, 1)",
+                        datasets: [{
+                            yAxisID: "Left",
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255,99,132,1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)'
+                            ],
+                            borderWidth: 1,
+                            label: '感測器數值',
+                            data: MainLineY
+                        }, {
+                            type: 'bar',
+                            yAxisID: "Right",
+                            backgroundColor: [
+                                'rgba(255, 162, 235, 0.8)',
+                            ],
+                            borderColor: [
+                                'rgba(255, 162, 235, 1)',
+                            ],
+                            label: '警告差距',
+                            fill: true,
+                            data: errorArray
+                        }]
+                    },
+                });
+
+                var BarSearchChart = document.getElementById('MainBarSearchChart');
+                var BarChart = new Chart(BarSearchChart, {
+                    type: 'bar',
+                    display: false,
+                    data: {
+                        labels: MainLineX,
+                        datasets: [{
+                            type: 'bar',
+                            backgroundColor: [
+                                'rgba(54, 162, 235, 0.2)',
+                            ],
+                            borderColor: [
+                                'rgba(54, 162, 235, 1)',
+                            ],
+                            borderWidth: 1,
+                            label: '感測器數值',
+                            data: MainLineY
+                        }, {
+                            type: 'bar',
+                            backgroundColor: [
+                                'rgba(255, 162, 235, 0.2)',
+                            ],
+                            borderColor: [
+                                'rgba(255, 162, 235, 1)',
+                            ],
+                            borderWidth: 1,
+                            label: '超出數值',
+                            data: errorArray
+                        }]
+                    }
+                });
+
+                CreateListData();
+                
+                $('#SearchMax').html(MaxData);
+                $('#Searchmin').html(minData);
+                $('#Searchaverage').html((sumdata / totalData).toFixed(2));
+                $('#SearchError').html(errortime);
+
+            },
+            error: function(response){
+                alert("查詢圖表失敗")
+                console.log(response.text)
+            }
+        })
     })
 })
 
-function calculate(){
-    var average , max , min
-    var len = serch_y.length
-    max = 0
-    min = serch_y[0]
-    //sum = 0.00
-    var sum = 0
-    for(var i = 0 ; i < len ; i++){
-        sum = sum + serch_y[i]
-        
-        if(serch_y[i]>max){
-            max = serch_y[i]
+function SensorData(){
+    $.ajax({
+        url: "../php/GetSensorData.php",
+        dataType: "json",
+        type: "POST",
+        data:{
+            sensorCode:sensorCode
+        },
+        success: function(response){    
+            console.log(response[0].SensorName)
+            $('#Name').html(response[0].SensorName)
+            $('#Type').html(response[0].SensorType)
+            $('#Code').html(response[0].SensorCode)
+            $('#CreateDate').html(response[0].CreateDate)
+            $('#Last').html(response[0].Date)
+            $('#Max').html(response[0].MaxError)
+            $('#Min').html(response[0].minError)
+            $('#ErrorTime').html(response[0].SensorError)
+            MaxError = response[0].MaxError;
+            minError = response[0].minError;
+            console.log("獲取資料成功")
+            //console.log(Object.keys(response).length)
+        },
+        error: function(response){
+            alert("取得資料錯誤")
+            alert(response.text)
         }
-    }
-    for(var j = 0 ; j < len ; j++){
-        
-        if(serch_y[j]<min){
-            min = serch_y[j]
-        }
-    }
-    average = sum/len
-    
-    kanban.$set(kanban.value,'ph_max',max) 
-    kanban.$set(kanban.value,'ph_min',min) 
-    kanban.$set(kanban.value,'ph_average',average.toFixed(2))
+    })
 }
 
-function remove_array(){
-    while(serch_x.length){
-        serch_x.pop()
-        serch_y.pop()
-    }
-    return true
-}
-
-// Vue.js
-let data = {
-    search:{
-        start_time:'',
-        start_date: '',
-        end_time:'',
-        end_date: '',
-        x : serch_x
-    }
-}
-
-var search = new Vue({
-    el : "#search",
-    data: data,
-    computed:{
-        x_length(){
-            return this.serch.x.length
-        }
-    },
-    methods:{
-        post_time(){
-            var start_time = this.search.start_time
-            var start_date = this.search.start_date
-            var end_time = this.search.end_time
-            var end_date = this.search.end_date
-            
-            if(start_date == '' || end_date == ''){
-                alert("check your choice")
+function CreateListData(){ 
+    tableString = "";
+    tableString += '<table class="table table-striped table-hover">' +
+                    '    <thead>' +
+                    '    <tr>' +
+                    '        <th scope="col">#</th>' +
+                    '        <th scope="col">日期</th>' +
+                    '        <th scope="col">數值</th>' +
+                    '        <th scope="col">超過上限</th>' +
+                    '    </tr>' +
+                    '    </thead>' +
+                    '    <tbody>' 
+    for(var i = firstPage; i < finalPage; i++){
+        if(i < totalData){
+            tableString +=  '<tr>' +
+                            '    <th scope="row">' + (i + 1) + '</th>' +
+                            '    <td>' + responseData[i].Date +'</td>' +
+                            '    <td>' + responseData[i].value +'</td>' 
+            if(responseData[i].value > MaxError || responseData[i].value < minError){
+                tableString += '    <td class="bg-danger text-white">是</td>' +
+                                 '</tr>'
             }
             else{
-                if(start_date > end_date){
-                    alert("請檢查您選擇的日期")
-                }
-                else{
-                    $.ajax({
-                        url: "../php/SearchData.php",
-                        dataType: "json",
-                        type: "POST",
-                        data:{
-                            start_time:start_time,
-                            start_date:start_date,
-                            end_time:end_time,
-                            end_date:end_date,
-                            sensorCode:sensorCode
-                        },
-                        success: function (response) {
-                            if(remove_array()){
-                                for(var item in response){
-                                    serch_x.push(value[item].Date)
-                                    serch_y.push(parseFloat(value[item].FishData) )
-                                }
-                            }
-
-                            serch_Chart.update()
-                            calculate()
-                        },
-                        error: function(response){
-
-                        }
-                    })
-                }
+                tableString += '    <td>否</td>' +
+                                '</tr>'
             }
         }
     }
-})
 
-let k_data = {
-    value:{
-        ph_max:'',
-        ph_min:'',
-        ph_average:'',
-        temperature_max:'',
-        temperature_min:'',
-        temperature_average:'',
-        o2_max:'',
-        o2_min:'',
-        o2_average:''
+    tableString +=  '    </tbody>' + 
+                    '</table>' +
+                    '<div class="col-12 d-flex justify-content-center ">' +
+                    '    <nav aria-label="Page navigation example">' +
+                    '        <ul class="pagination">' 
+
+    if(firstPage == 0){
+        tableString +=    '        <li class="page-item disabled">' 
+    }
+    else{
+        tableString +=    '        <li class="page-item">' 
+    }
+
+    tableString +=  '            <a class="page-link" href="#" aria-label="Previous" onclick="CaculatePage(' + (nowPage - 1) + ')">' +
+                    '            <span aria-hidden="true">&laquo;</span>' +
+                    '            </a>' +
+                    '        </li>' 
+    for(var j = 1; j < Math.ceil(totalData / 10) + 1; j++){
+        console.log("Math.ceil(totalData / 10) = " + Math.ceil(totalData / 10))
+        tableString +=  '<li class="page-item"><a class="page-link" href="#" onclick="CaculatePage(' + j + ')">' + j + '</a></li>'
+    }
+
+    if(finalPage == totalData){
+        tableString +=    '        <li class="page-item disabled">' 
+    }
+    else{
+        tableString +=    '        <li class="page-item">' 
+    }
+
+    tableString +=  
+                    '            <a class="page-link" href="#" aria-label="Next" onclick="CaculatePage(' + (nowPage + 1) + ')">' + 
+                    '            <span aria-hidden="true">&raquo;</span>' + 
+                    '            </a>' + 
+                    '        </li>' + 
+                    '        </ul>' + 
+                    '    </nav>' + 
+                    '</div>'
+
+    $('#TheTables').html(tableString);
+    console.log("創建成功")
+}
+
+function CaculatePage(Page) {  
+    nowPage = Page;
+    firstPage = (Page - 1) * 10;
+    if(Page * 10 - 1 < totalData){
+        finalPage = Page * 10;
+    }
+    else{
+        finalPage = totalData;
+    }
+    
+    CreateListData();
+}
+
+function ErrorSetZero(){
+    $.ajax({
+        url: "../php/SensorSetZero.php",
+        type: "POST",
+        data:{
+            sensorCode:sensorCode
+        },
+        success: function(response){    
+            window.location.reload();
+        },
+        error: function(response){
+            alert("取得資料錯誤")
+            alert(response)
+            alert(response.text)
+        }
+    })
+}
+
+function DeleteSensor(){
+    $.ajax({
+        url: "../php/SensorDelete.php",
+        type: "POST",
+        data:{
+            sensorCode:sensorCode
+        },
+        success: function(response){    
+            window.location.href = "../html/SensorManage.html"
+        },
+        error: function(response){
+            alert("取得資料錯誤")
+            alert(response.text)
+        }
+    })
+}
+
+function TotalData(){
+    $.ajax({
+        url: "../php/TotalData.php",
+        dataType: 'json',
+        type: "POST",
+        data:{
+            sensorCode:sensorCode
+        },
+        success: function(response){    
+            $('#TotalData').html(response[0].total);
+        },
+        error: function(response){
+            alert("取得資料錯誤")
+            alert(response.text)
+        }
+    })
+}
+
+function Myfn2(){
+    if(back == 1){
+        window.location.href = "../html/FishPond2.html?Name=" + fishName 
+    }else if(back == 2){
+        window.location.href = "../html/SensorManage.html"
     }
 }
 
-var kanban = new Vue({
-    el:'#kanban',
-    data: k_data
-})
-
-
-// var all_month = []
-
-
-// var month_test = [{"Time":"2023-02-01 19:56:52","ph":"9.78"},{"Time":"2023-02-09 19:56:57","ph":"7.73"},{"Time":"2023-02-09 19:57:02","ph":"6.93"},{"Time":"2023-02-09 19:57:07","ph":"4.05"},{"Time":"2023-02-09 19:57:12","ph":"4.3"},{"Time":"2023-03-01 19:24:32","ph":"7.3"}
-// ,{"Time":"2023-03-02 19:24:32","ph":"4.3"},{"Time":"2023-03-21 19:54:02","ph":"3.3"},{"Time":"2023-03-31 19:44:12","ph":"6.4"}]
-
-// for(j = 1 ; j < 13 ; j++){
-    
-//     var month = []
-//     bar_x.push(j)
-//     for(i = 0 ; i < month_test.length ; i++){
-//         var day = month_test[i].Time.split(" ")[0].split("-")[1]
-        
-//         if(day == j){     
-//             month.push(month_test[i].ph)
-            
-//         }
-//     }
-//     all_month.push(month)
-    
-// }
-
-
-
-// var s, a 
-// for(j = 1 ; j < 4 ; j++){
-//     s = 0
-//     a = 0
-//     var len = all_month[j-1].length
-//     console.log(all_month[j-1])
-//     if(len>0){
-//         for(i = 0 ; i < len ; i++){
-//             s = s + parseFloat(all_month[j-1][i])
-            
-//         }
-//     }
-    
-//     console.log(s)
-//     a = s/len  
-//     if(!isNaN(a.toFixed(2))){
-//         bar_y[j-1] = a.toFixed(2)
-//     }
-//     bar_chart.update()
-//     console.log(bar_y)
-    
-// }
+function updateLastView(ID){
+    console.log(ID);
+    $.ajax({
+        url: "../php/UpdateLastView.php",
+        type: "POST",
+        dataType: "json",
+        data:{
+            ID:ID
+        },
+        success: function(response){
+            $('#total').html("感測器總數: " + response[0].total);
+        }
+    })
+}

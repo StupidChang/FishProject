@@ -1,5 +1,7 @@
-var FishPondNumber = 1;
+//var FishPondNumber = 1;
 var CardHtml = "";
+var data ;
+var border = false;
 //var CardData;
 //var MyAjax = null;
 
@@ -8,12 +10,12 @@ $(function() {
     Get2SQL()
     //var fishdiv = document.getAttribute("fishdiv");
 
-    document.body.onclick = function(event){    //冒泡处理
+    /*document.body.onclick = function(event){    //冒泡处理
         console.log(event.target.parents('[name="Dad"]'));
         //console.log(event.target.style.attribute);
         console.log(event.target.closest('td[name="Dad"]'));
             
-    }
+    }*/
 });
 
 function Get2SQL(){
@@ -23,9 +25,9 @@ function Get2SQL(){
         dataType:'json',        
         async: false,
         success: function(response){
-            var CardData = response;
+            var data = response;
             //var CardData = JSON.stringify(response);
-            generate(CardData);   
+            generate(response);   
         },
         error: function (thrownError) {
             alert("php請求錯誤");
@@ -41,29 +43,30 @@ function Get2SQL(){
 function generate(CardData){
     for(var item in CardData){
         console.log(CardData[item].FishPondName);  
-        CreateHTML(CardData[item].FishPondName, CardData[item].FishText);
-        FishPondNumber++;
+        CreateHTML(CardData[item].FishPondName, CardData[item].FishText, CardData[item].FishCode);
+        //FishPondNumber++;
     }
     $("#FishPondList").html(CardHtml);
 }
 
-function CreateHTML(FishPondName, FishText){
-    CardHtml += '<div class="card mt-3 col-12 border-1 rounded-3 border border-secondary" style="max-height: 200px;" name="Dad" data-FishName="' + FishPondName + '">' +
-            '<div class="row g-0">' +   
-                '<div class="col-md-2" >' +
-                    '<img src="../Img/fishpond.PNG" class="img-fluid rounded-start" style="height: 190px; width: 150px;"  alt="...">' +
-                '</div>' +
-                '<div class="col-md-10 bg-gray">' +
-                    '<div class="card-body">' +
-                    '<h5 class="card-title">' + FishPondName + '</h5>' +
-                    '<p class="card-text">' + FishText + '</p>' +
-                    '<p class="card-text"><small class="text-muted">歡迎使用魚塭系統</small></p>' +
-                    '<div class="d-flex justify-content-end">' +
-                        '<div class="shape-ex5 d-flex justify-content-center" name="fishdiv" id="' + FishPondName + '" onclick="MYfn(\'' + FishPondName + '\')"><p>前往漁塭</p></div></div>' +
+function CreateHTML(FishPondName, FishText, FishCode){
+    CardHtml += '<a  onclick="FishPondData(' + FishCode + ')"><div id="' + FishCode + '" class="card mt-3 col-12 border-1 rounded-3 border border-secondary" style="max-height: 200px;" name="Dad" data-FishName="' + FishPondName + '">' +
+                    '<div class="row g-0">' +   
+                        '<div class="col-md-2" >' +
+                            '<img src="../Img/fishpond.PNG" class="img-fluid rounded-start" style="height: 190px; width: 150px;"  alt="...">' +
+                        '</div>' +
+                        '<div class="col-md-10 bg-gray">' +
+                            '<div class="card-body">' +
+                            '<h5 class="card-title">' + FishPondName + '</h5>' +
+                            '<p class="card-text">' + FishText + '</p>' +
+                            '<p class="card-text"><small class="text-muted">歡迎使用魚塭系統</small></p>' +
+                            '<div class="d-flex justify-content-end">' +
+                                '<div class="shape-ex5 d-flex justify-content-center" name="fishdiv" id="' + FishPondName + '" onclick="MYfn(\'' + FishPondName + '\')"><p>前往漁塭</p></div></div>' +
+                            '</div>' +
+                        '</div>' +
                     '</div>' +
-                '</div>' +
-            '</div>' +
-        '</div>';
+                    '</div>'+
+                '</a>';
 }
 
 function MYfn(Name){
@@ -81,6 +84,18 @@ function MYfn(Name){
      }
 }
 
+function FishPondData(FishCode) {
+    console.log("HI~")
+    for(var item in data){
+        if(data[item].FishCode = FishCode){
+            $('FishPondName').html(data[item].FishCode)
+            $('FishCode').html(data[item].FishPondName)
+            $('FishPondCreateDate').html(data[item].CreateDate)
+            $('FishPondX').html(data[item].X)
+            $('FishPondY').html(data[item].Y)
+        }
+    }
+}
 
 
 /*function ClickFish(Tab){  onclick="ClickFish()"
@@ -109,7 +124,7 @@ $(document).on('click', '#FishSubmit', function(){//使用$(document).on()的原
     console.log(FishSubmitX);
     console.log(FishSubmitY);
     console.log(FishSubmitText);
-    console.log(FishPondNumber);
+    //console.log(FishPondNumber);
 
     $.ajax({
        url:'../php/FishPondSubmit.php',
@@ -119,7 +134,7 @@ $(document).on('click', '#FishSubmit', function(){//使用$(document).on()的原
         FishSubmitX:FishSubmitX,
         FishSubmitY:FishSubmitY,
         FishSubmitText:FishSubmitText,
-        FishPondNumber:FishPondNumber
+        //FishPondNumber:FishPondNumber
        },
        success:function(){
             console.log("Yeah!!")
@@ -132,3 +147,16 @@ $(document).on('click', '#FishSubmit', function(){//使用$(document).on()的原
         }
     })
  });
+
+ function borderFn(Name, id) {
+    for(var item in data){
+        if(data[item].FishCode = id){
+            $('#FishPondY').html(data[item].Y)
+            $('#FishPondX').html(data[item].X)
+            $('#FishPondSensorNumber').html(data[item].FishPondName)
+            $('#FishPondCreateDate').html(data[item].CreateDate)
+            $('#FishPondName').html(data[item].FishPondName)
+            $('#FishCode').html(data[item].FishCode)
+        }
+    }
+ }

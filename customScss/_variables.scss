@@ -70,7 +70,7 @@ $colors: (
 $purple:        $purple !default;
 $pink:          $pink !default;
 
-$primary:       $purple !default;
+$primary:       $blue !default;
 $secondary:     $gray-600 !default;
 $success:       $green !default;
 $info:          $cyan !default;
@@ -90,7 +90,8 @@ $theme-colors: (
   "danger":     $danger,
   "light":      $light,
   "dark":       $dark,
-  "orange":     rgb(255, 164, 45),
+  "orange":     rgb(255, 153, 19),
+  "gold":       rgb(255, 167, 51),
   "pink":       $pink,
   "purple":     $purple,
   "cyan":       $cyan
@@ -1103,7 +1104,7 @@ $nav-tabs-border-color:             $gray-300 !default;
 $nav-tabs-border-width:             $border-width !default;
 $nav-tabs-border-radius:            $border-radius !default;
 $nav-tabs-link-hover-border-color:  $gray-200 $gray-200 $nav-tabs-border-color !default;
-$nav-tabs-link-active-color:        $gray-700 !default;
+$nav-tabs-link-active-color:        $pink !default;
 $nav-tabs-link-active-bg:           $body-bg !default;
 $nav-tabs-link-active-border-color: $gray-300 $gray-300 $nav-tabs-link-active-bg !default;
 

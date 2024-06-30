@@ -1,0 +1,75 @@
+<!DOCTYPE html>  
+<html lang = "en">  
+<head>  
+    <title > Bootstrap Popover Example </title>  
+    <meta charset = "utf-8">  
+    <meta name = "viewport" content = "width=device-width, initial-scale=1">  
+    <link href = "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel = "stylesheet">  
+    <script src = "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js">  </script>
+    <script src = "../js/test.js"></script>
+</head>  
+<body>  
+    <div class = "container mt-2">  
+        <div class="popover-heading">感測器群組列表</div>
+        <div class="popover-body">
+            This is the body for #2<br> With <b>html</b> content
+            <button class="btn btn-primary mx-auto">Button</button>
+            </div>
+        <h5> Bootstrap 5 Popover with Button </h5>    
+        <button href = "#" class = "btn btn-info" type = "button" data-bs-toggle = "popover" title = "Thank You!" >  Click Here!  </button>  
+    </div>  
+
+    <a href="#" class="list-group-item d-flex justify-content-between align-items-start list-group-item-action" onclick="Test()">
+        <div class="ms-2 me-auto">
+            <div class="fw-bold">測試用</div>
+            感測器代號: 1
+        </div>
+        <span class="badge bg-danger rounded-pill">0</span>
+    </a>
+    
+    <a href="#" class="list-group-item d-flex justify-content-between align-items-start list-group-item-action" onclick="Test()">
+        <div class="ms-2 me-auto">
+            <div class="fw-bold">測試2</div>
+            感測器代號: 4
+        </div>
+        <span class="badge bg-danger rounded-pill">0</span>
+    </a>
+    <div class="d-flex justify-content-center mt-2">
+        <button type="button" data-bs-target="#DeletePosition1" data-bs-toggle="modal" class="btn btn-danger" data-Position="1">刪除感測器</button>
+    </div>
+    <div class="modal fade" id="DeletePosition1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">        
+        <div class="modal-dialog modal-dialog-centered">          
+            <div class="modal-content">            
+                <div class="modal-header">              
+                    <h5 class="modal-title" id="exampleModalLabel" style="color: goldenrod;">加入感測器至群組</h5>              
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>            
+                </div>            
+                <div class="modal-body">              
+                    <label for="basic-url" class="form-label">將選擇的感測器移出群組。</label>              
+                    <div class="input-group mb-3">                
+                        <span class="input-group-text" id="basic-addon1">感測器編號</span>                
+                        <select class="form-select" id="inputGroupSelectSensorCode">                
+
+                        </select>              
+                    </div>            
+                </div>            
+                <div class="modal-footer">              
+                    <div id="AddSensor2GroupErrorMsg" Style="color: red"></div>              
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>              
+                    <button type="button" class="btn btn-primary" onclick="AddSensor2Group()">確認加入</button>            
+                </div>          
+            </div>        
+        </div>      
+    </div>
+
+
+    
+
+    <script>  
+        var popoverList1 = [].slice.call(document.querySelectorAll('[data-bs-toggle = "popover"]'))  
+        var popoverList2 = popoverList1.map(function (popoverTriggerfun) {  
+            return new bootstrap.Popover(popoverTriggerfun)  
+        })  
+    </script>   
+</body>  
+</html>  
